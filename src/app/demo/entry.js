@@ -1,0 +1,18 @@
+import {Router, Route, browserHistory} from 'react-router';
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import App from '../../component/App';
+import About from '../../component/About';
+import Inbox from '../../component/Inbox';
+import './demo.css';
+
+ReactDOM.render(
+  <Router history={browserHistory}>
+    <Route path="/" component={App}>
+      <Route path="about" component={About}/>
+      <Route path="inbox" component={Inbox}/>
+    </Route>
+  </Router>,
+  document.getElementById('root')
+);
