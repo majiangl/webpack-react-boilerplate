@@ -1,12 +1,12 @@
-### Build System Features
+## Build System Features
 - [x] Multi-page support
-- Rebuild optimization
+- [ ] Rebuild optimization
 - [x] Bundle Analysis
 - [x] Linting
-- Git precommit hook
-- Unit testing
+- [x] Git precommit hook
+- [ ] Unit testing
 
-### Framework Features
-- React, React-Redux, React-Router integration
+## Framework Features
+- [ ] React, React-Redux, React-Router integration
 - [x] Babel-Polyfill disabled to decrease bundle size
-- I18n
+- [ ] I18n
