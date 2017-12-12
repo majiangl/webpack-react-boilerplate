@@ -2,9 +2,9 @@ import {Router, Route, browserHistory} from 'react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App from '../../component/App';
-import About from '../../component/About';
-import Inbox from '../../component/Inbox';
+import App from 'app/component/App';
+import About from 'app/component/About';
+import Inbox from 'app/component/Inbox';
 import './demo.css';
 
 ReactDOM.render(

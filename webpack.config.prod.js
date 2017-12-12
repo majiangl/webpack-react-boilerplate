@@ -113,5 +113,10 @@ module.exports = {
     }),
     // 将 webpack manifest 内联到 html
     new InlineManifestWebpackPlugin()
-  ].concat(htmlWebpackPlugins)
+  ].concat(htmlWebpackPlugins),
+  resolve: {
+    alias: {
+      app: path.resolve(__dirname, 'src')
+    }
+  }
 };

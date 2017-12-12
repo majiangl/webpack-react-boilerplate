@@ -91,5 +91,10 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: ['core', 'manifest']
     })
-  ].concat(htmlWebpackPlugins)
+  ].concat(htmlWebpackPlugins),
+  resolve: {
+    alias: {
+      app: path.resolve(__dirname, 'src')
+    }
+  }
 };

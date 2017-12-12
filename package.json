@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.config.prod.js",
-    "watch": "webpack --config webpack.config.dev.js --watch",
+    "watch": "webpack --watch",
     "start": "webpack-dev-server --open --config webpack.config.dev.js",
     "analyze": "node ./build/analyze.js",
     "precommit": "lint-staged"
