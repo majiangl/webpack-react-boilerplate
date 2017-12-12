@@ -4,10 +4,15 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 // Lookup plugin config: https://github.com/webpack-contrib/webpack-bundle-analyzer
 config.plugins.push(new BundleAnalyzerPlugin());
+config.profile = true;
+
 const compiler = webpack(config);
 
-compiler.run(function(err, stats){
-  if(err){
+compiler.run(function (err, stats) {
+  if (err) {
     throw err;
   }
+  console.log(stats.toString({
+    colors: true
+  }));
 });
