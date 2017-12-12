@@ -15,7 +15,7 @@ function getEntries(dir) {
     const pathname = path.join(dir, name);
 
     if (fs.statSync(pathname).isDirectory()) {
-      entries[name] = path.resolve(pathname, 'entry.js');
+      entries[name] = path.resolve(pathname, 'index.js');
     }
   }
   return entries;
