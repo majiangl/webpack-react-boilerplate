@@ -18,7 +18,7 @@ function getEntries(dir) {
   return entries;
 }
 
-const jsEntries = getEntries('src/biz/');
+const jsEntries = getEntries('src/page/');
 const htmlWebpackPlugins = Object.keys(jsEntries).map(function (name) {
   let tpl = path.resolve('src/view', name + '.html');
   let config = {
