@@ -11,10 +11,15 @@
             "ie 11"
           ]
         },
-        // 按需添加 babel polyfill，减少转码文件大小
+        // 按需添加babel-polyfill，减少转码文件大小
         "useBuiltIns": true
       }
     ],
     "react"
+  ],
+  "plugins": [
+    // TODO: 使用transform-runtime替换external-helpers. babel 7将会解决transform-runtime额外加载core-js的问题.
+    // 当前使用babel-plugin-external-helpers代替babel-plugin-transform-runtime
+    "external-helpers"
   ]
 }

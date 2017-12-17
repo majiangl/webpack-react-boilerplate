@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import MPA from 'app/MPA';
-import './demo.css';
+import Demo from './Demo';
 
 ReactDOM.render(
   <MPA>
-    <p>Hello, World!</p>
+    <Demo></Demo>
   </MPA>,
   document.getElementById('root')
 );

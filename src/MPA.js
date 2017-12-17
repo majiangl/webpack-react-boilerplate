@@ -4,7 +4,6 @@ import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
-import logger from 'redux-logger';
 
 class MPA extends Component {
 
@@ -25,6 +24,7 @@ class MPA extends Component {
   getStoreEnhancer() {
     const middlewares = [thunk, promiseMiddleware()];
     if(process.env.NODE_ENV!='production') {
+      const {default:logger} = require('redux-logger');
       middlewares.push(logger);
     }
     return applyMiddleware.apply(null, middlewares);

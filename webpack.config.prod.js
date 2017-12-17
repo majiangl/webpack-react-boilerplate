@@ -15,7 +15,8 @@ function getEntries(dir) {
     const pathname = path.join(dir, name);
 
     if (fs.statSync(pathname).isDirectory()) {
-      entries[name] = path.resolve(pathname, 'index.js');
+      // TODO: remove babelHelpers.js when upgrade to babel 7 and use transform-runtime
+      entries[name] = ['./build/babelHelpers.js',path.resolve(pathname, 'index.js')];
     }
   }
   return entries;
@@ -49,7 +50,7 @@ module.exports = {
     rules: [{
       test: /\.js$/,
       // 排除不需要转码的目录，提高 babel 效率
-      exclude: /(node_modules|bower_components)/,
+      exclude: /(node_modules|bower_components|build)/,
       use: {
         loader: 'babel-loader',
         options: {
@@ -104,7 +105,13 @@ module.exports = {
         'NODE_ENV': JSON.stringify('production')
       }
     }),
-    new UglifyJSPlugin(),
+    new UglifyJSPlugin({
+      uglifyOptions: {
+        compress: {
+          drop_console: true
+        }
+      }
+    }),
     new ExtractTextPlugin({
       filename: 'css/[name]_[contenthash].css'
     }),

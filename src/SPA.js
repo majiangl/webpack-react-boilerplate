@@ -4,7 +4,6 @@ import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
-import logger from 'redux-logger';
 import {Router} from 'react-router';
 import {syncHistoryWithStore, routerReducer, routerMiddleware} from 'react-router-redux';
 
@@ -32,6 +31,7 @@ class SPA extends Component {
   getStoreEnhancer() {
     const middlewares = [thunk, promiseMiddleware(), routerMiddleware()];
     if(process.env.NODE_ENV!='production') {
+      const {default:logger} = require('redux-logger');
       middlewares.push(logger);
     }
     return applyMiddleware.apply(null, middlewares);
