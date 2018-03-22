@@ -38,7 +38,7 @@ module.exports = {
   },
   // 不同的source map策略选择：https://webpack.js.org/configuration/devtool/
   // 不同的source map效果： https://github.com/webpack/webpack/tree/master/examples/source-map
-  //devtool: 'cheap-module-eval-source-map',
+  devtool: 'cheap-module-eval-source-map',
   // See served files: http://localhost:8080/webpack-dev-server
   devServer: {
     contentBase: './dist',

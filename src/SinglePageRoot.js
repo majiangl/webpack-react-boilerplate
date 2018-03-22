@@ -4,8 +4,9 @@ import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
+import {BrowserRouter} from 'react-router-dom';
 
-class MPA extends Component {
+class SinglePageRoot extends Component {
 
   shouldComponentUpdate() {
     return false;
@@ -17,7 +18,9 @@ class MPA extends Component {
     const store = createStore(rootReducer, initialState, this.getStoreEnhancer());
 
     return (
-      <Provider store={store}>{children}</Provider>
+      <Provider store={store}>
+        <BrowserRouter>{children}</BrowserRouter>
+      </Provider>
     );
   }
 
@@ -31,10 +34,10 @@ class MPA extends Component {
   }
 }
 
-MPA.propTypes = {
-  children: PropTypes.any,
+SinglePageRoot.propTypes = {
+  children: PropTypes.node,
   initialState: PropTypes.object,
   reducers: PropTypes.object
-};
+}
 
-export default MPA;
+export default SinglePageRoot;

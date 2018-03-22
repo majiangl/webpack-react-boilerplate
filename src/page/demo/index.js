@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import MPA from 'app/MPA';
+import MultiPageRoot from 'app/MultiPageRoot';
 import Demo from './Demo';
 
 ReactDOM.render(
-  <MPA>
+  <MultiPageRoot>
     <Demo></Demo>
-  </MPA>,
+  </MultiPageRoot>,
   document.getElementById('root')
 );
