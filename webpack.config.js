@@ -1,37 +1,36 @@
 const path = require('path');
-const fs = require('fs');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const util = require('./build/util');
 
-function getEntries(dir) {
+/**
+ * 获取js entries
+ * @param dir
+ * @return {'demo':[build/babelHelpers.js,src/page/demo.js]}
+ */
+function getEntries() {
   const entries = {};
-  const names = fs.readdirSync(dir);
 
-  for (let name of names) {
-    const pathname = path.join(dir, name);
+  util.filterEntries(util.lookupEntries('src/page', true),process.env.filter).forEach(function (item) {
+    // TODO: remove babelHelpers.js when upgrade to babel 7 and use transform-runtime
+    entries[item.entryname] = ['./build/babelHelpers.js', path.resolve(item.pathname, 'index.js')];
+  });
 
-    if (fs.statSync(pathname).isDirectory()) {
-      // TODO: remove babelHelpers.js when upgrade to babel 7 and use transform-runtime
-      entries[name] = ['./build/babelHelpers.js',path.resolve(pathname, 'index.js')];
-    }
-  }
   return entries;
 }
 
-const jsEntries = getEntries('src/page/');
-const htmlWebpackPlugins = Object.keys(jsEntries).map(function (name) {
-  let tpl = path.resolve('src/view', name + '.html');
+const htmlWebpackPlugins = util.filterEntries(util.lookupEntries('src/view'),process.env.filter).map(function (item) {
   let config = {
     favicon: 'src/asset/img/favicon.ico',
-    template: tpl,
-    chunks: ['manifest', 'core', name]
+    template: item.pathname,
+    chunks: ['manifest', 'core', item.entryname]
   };
   return new HtmlWebpackPlugin(config);
 });
 
 module.exports = {
-  entry: jsEntries,
+  entry: getEntries(),
   output: {
     filename: 'js/[name].js',
     path: path.resolve(__dirname, 'dist')

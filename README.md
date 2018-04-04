@@ -4,6 +4,7 @@
 - [x] Linting
 - [x] Git precommit hook
 - [ ] Unit testing
+- [ ] JSDoc/Docco
 
 ## Framework Features
 - [x] React/Redux/React-Redux/React-Router
