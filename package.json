@@ -10,7 +10,8 @@
     "analyze": "node ./build/analyze.js",
     "lines": "find src -name \"*.js\" | xargs cat | wc -l",
     "precommit": "lint-staged",
-    "gen:babelHelpers": "babel-external-helpers > build/babelHelpers.js"
+    "gen:babelHelpers": "babel-external-helpers > build/babelHelpers.js",
+    "docs": "jsdoc -c .jsdocconfig.json && http-server ./docs -c-1 -p 9080 -o"
   },
   "lint-staged": {
     "src/**/*.js": [
@@ -50,8 +51,10 @@
     "file-loader": "^1.1.5",
     "glob": "^7.1.2",
     "html-webpack-plugin": "^2.30.1",
+    "http-server": "^0.11.1",
     "husky": "^0.14.3",
     "inline-manifest-webpack-plugin": "^3.0.1",
+    "jsdoc": "^3.5.5",
     "lint-staged": "^6.0.0",
     "minimist": "^1.2.0",
     "style-loader": "^0.19.1",

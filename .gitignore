@@ -1,4 +1,6 @@
 dist
+# jsdoc output directory
+docs
 .idea
 
 # Logs

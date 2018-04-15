@@ -1,0 +1,15 @@
+{
+  "templates": {
+    "cleverLinks": true
+  },
+  "opts": {
+    "destination": "./docs/",          // same as -d ./docs/
+    "recurse": true                   // same as -r
+  },
+  "source": {
+    "include": [ "src/component"/* array of paths to files to generate documentation for */ ],
+    "exclude": [ /* array of paths to exclude */ ],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  }
+}
