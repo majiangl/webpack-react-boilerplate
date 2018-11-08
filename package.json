@@ -10,7 +10,6 @@
     "analyze": "node ./build/analyze.js",
     "lines": "find src -name \"*.js\" | xargs cat | wc -l",
     "precommit": "lint-staged",
-    "gen:babelHelpers": "babel-external-helpers > build/babelHelpers.js",
     "docs": "jsdoc -c .jsdocconfig.json && http-server ./docs -c-1 -p 9080 -o"
   },
   "lint-staged": {
@@ -32,17 +31,18 @@
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-promise-middleware": "^5.0.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "@babel/runtime": "^7.1.5"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.0.3",
-    "babel-loader": "^7.1.2",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-preset-env": "^1.6.0",
-    "babel-preset-react": "^6.24.1",
-    "clean-webpack-plugin": "^0.1.16",
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.5",
+    "@babel/preset-env": "^7.1.5",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.4",
+    "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^0.28.7",
     "docco": "^0.8.0",
     "eslint": "^4.7.2",
@@ -52,16 +52,15 @@
     "glob": "^7.1.2",
     "html-webpack-plugin": "^2.30.1",
     "http-server": "^0.11.1",
-    "husky": "^0.14.3",
+    "husky": "^1.1.3",
     "inline-manifest-webpack-plugin": "^3.0.1",
     "jsdoc": "^3.5.5",
     "lint-staged": "^6.0.0",
-    "minimist": "^1.2.0",
     "style-loader": "^0.19.1",
     "uglifyjs-webpack-plugin": "^1.1.4",
     "url-loader": "^0.6.2",
     "webpack": "^3.10.0",
-    "webpack-bundle-analyzer": "^2.9.1",
+    "webpack-bundle-analyzer": "^3.0.3",
     "webpack-dev-server": "^2.9.7"
   }
 }

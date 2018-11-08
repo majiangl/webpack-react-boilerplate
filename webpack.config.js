@@ -13,8 +13,7 @@ function getEntries() {
   const entries = {};
 
   util.filterEntries(util.lookupEntries('src/page', true),process.env.filter).forEach(function (item) {
-    // TODO: remove babelHelpers.js when upgrade to babel 7 and use transform-runtime
-    entries[item.entryname] = ['./build/babelHelpers.js', path.resolve(item.pathname, 'index.js')];
+    entries[item.entryname] = path.resolve(item.pathname, 'index.js');
   });
 
   return entries;

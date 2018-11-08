@@ -7,15 +7,6 @@ import PropTypes from 'prop-types';
  * @author Ma Jianglong <rjgcmjl@163.com>
  */
 class DemoComponent extends Component {
-  /**
-   * Properties passed to react component.
-   *
-   * @alias DemoComponent#props
-   * @property text {string} - Required. Text to display
-   */
-  static propTypes = {
-    text: PropTypes.string.isRequired
-  }
 
   /**
    * Create a react component
@@ -33,6 +24,10 @@ class DemoComponent extends Component {
       </div>
     );
   }
+}
+
+DemoComponent.propTypes = {
+  text: PropTypes.string.isRequired
 }
 
 export default DemoComponent;
