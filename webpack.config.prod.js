@@ -132,5 +132,9 @@ module.exports = {
     alias: {
       app: path.resolve(__dirname, 'src')
     }
+  },
+  stats: {
+    // Display bailout reasons
+    optimizationBailout: true
   }
 };
