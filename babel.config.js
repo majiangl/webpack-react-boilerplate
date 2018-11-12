@@ -5,7 +5,7 @@ module.exports = {
       {
         "targets": {
           "chrome": "55",
-          "firefor": "52",
+          "firefox": "52",
           "safari": "9",
           "ie": "11"
         },

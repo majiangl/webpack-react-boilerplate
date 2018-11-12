@@ -7,23 +7,23 @@ const util = require('./build/util');
 /**
  * 获取js entries
  * @param dir
- * @return {'demo':[build/babelHelpers.js,src/page/demo.js]}
+ * @return {'demo':['src/page/demo.js']}
  */
 function getEntries() {
   const entries = {};
 
-  util.filterEntries(util.lookupEntries('src/page', true),process.env.filter).forEach(function (item) {
+  util.filterEntries(util.lookupEntries('src/page', true), process.env.filter).forEach(function (item) {
     entries[item.entryname] = path.resolve(item.pathname, 'index.js');
   });
 
   return entries;
 }
 
-const htmlWebpackPlugins = util.filterEntries(util.lookupEntries('src/view'),process.env.filter).map(function (item) {
+const htmlWebpackPlugins = util.filterEntries(util.lookupEntries('src/view'), process.env.filter).map(function (item) {
   let config = {
     favicon: 'src/asset/img/favicon.ico',
     template: item.pathname,
-    chunks: ['manifest', 'core', item.entryname]
+    chunks: ['runtime', 'vendors', 'core', item.entryname]
   };
   return new HtmlWebpackPlugin(config);
 });
@@ -42,6 +42,26 @@ module.exports = {
     contentBase: './dist',
     historyApiFallback: true,
     hot: true
+  },
+  mode: 'development',
+  optimization: {
+    runtimeChunk: 'single',
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          priority: -10
+        },
+        default: {
+          name: 'core',
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
+        }
+      }
+    }
   },
   module: {
     rules: [{
@@ -87,10 +107,6 @@ module.exports = {
     new CleanWebpackPlugin(['dist']),
     // This plugin will cause the relative path of the module to be displayed when HMR is enabled.
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: ['core', 'manifest']
-    })
   ].concat(htmlWebpackPlugins),
   resolve: {
     alias: {

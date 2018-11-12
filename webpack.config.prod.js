@@ -2,9 +2,10 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const util = require('./build/util');
 
 /**
@@ -16,7 +17,7 @@ function getEntries() {
   const entries = {};
 
   util.lookupEntries('src/page', true).forEach(function (item) {
-    entries[item.entryname] = path.resolve(item.pathname,'index.js');
+    entries[item.entryname] = path.resolve(item.pathname, 'index.js');
   });
 
   return entries;
@@ -26,7 +27,7 @@ const htmlWebpackPlugins = util.lookupEntries('src/view').map(function (item) {
   let config = {
     favicon: 'src/asset/img/favicon.ico',
     template: item.pathname,
-    chunks: ['manifest', 'core', item.entryname],
+    chunks: ['runtime', 'vendors', 'core', item.entryname],
     minify: {
       collapseWhitespace: true,
       minifyCSS: true,
@@ -44,6 +45,36 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/'
   },
+  mode: 'production',
+  optimization: {
+    // webpack cache 使用固定的 hashed module id，这样能保证同样的代码打出同样的结果
+    moduleIds: 'hashed',
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true // set to true if you want JS source maps
+      }),
+      new OptimizeCSSAssetsPlugin({})
+    ],
+    runtimeChunk: 'single',
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          priority: -10
+        },
+        default: {
+          name: 'core',
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
+        }
+      }
+    }
+  },
   module: {
     rules: [{
       test: /\.js$/,
@@ -59,16 +90,10 @@ module.exports = {
     },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          //resolve-url-loader may be chained before sass-loader if necessary
-          use: [{
-            loader: 'css-loader',
-            options: {
-              minimize: true
-            }
-          }]
-        })
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader'
+        ]
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -96,29 +121,13 @@ module.exports = {
   plugins: [
     // 清空 dist 目录
     new CleanWebpackPlugin(['dist']),
-    // webpack cache 使用固定的 hashed module id，这样能保证同样的代码打出同样的结果
-    new webpack.HashedModuleIdsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    }),
-    new UglifyJSPlugin({
-      uglifyOptions: {
-        compress: {
-          drop_console: true
-        }
-      }
-    }),
-    new ExtractTextPlugin({
-      filename: 'css/[name]_[contenthash].css'
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: ['core', 'manifest']
-    }),
-    // 将 webpack manifest 内联到 html
+    new MiniCssExtractPlugin({
+      filename: "css/[name]_[contenthash].css"
+    })
+  ].concat(htmlWebpackPlugins).concat([
+    // this plugin need to put after HtmlWebpackPlugin
     new InlineManifestWebpackPlugin()
-  ].concat(htmlWebpackPlugins),
+  ]),
   resolve: {
     alias: {
       app: path.resolve(__dirname, 'src')
