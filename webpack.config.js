@@ -12,7 +12,7 @@ const util = require('./build/util');
 function getEntries() {
   const entries = {};
 
-  util.filterEntries(util.lookupEntries('src/page', true), process.env.filter).forEach(function (item) {
+  util.filterEntries(util.lookupEntries('src/page', true), process.env.ENTRY_FILTER).forEach(function (item) {
     entries[item.entryname] = path.resolve(item.pathname, 'index.js');
   });
 
