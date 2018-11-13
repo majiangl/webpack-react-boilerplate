@@ -9,6 +9,8 @@ module.exports = {
           "safari": "9",
           "ie": "11"
         },
+        // Do not transform ES6 modules
+        "modules": false,
         // 按需添加babel-polyfill，减少转码文件大小
         "useBuiltIns": false
       }

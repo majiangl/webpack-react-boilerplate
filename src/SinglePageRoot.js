@@ -26,7 +26,7 @@ class SinglePageRoot extends Component {
 
   getStoreEnhancer() {
     const middlewares = [thunk, promiseMiddleware()];
-    if(process.env.NODE_ENV!='production') {
+    if(process.env.NODE_ENV!=='production') {
       const {default:logger} = require('redux-logger');
       middlewares.push(logger);
     }
