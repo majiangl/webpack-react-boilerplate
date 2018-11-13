@@ -12,14 +12,14 @@ const util = require('./build/util');
 function getEntries() {
   const entries = {};
 
-  util.filterEntries(util.lookupEntries('src/page', true), process.env.ENTRY_FILTER).forEach(function (item) {
+  util.filterEntries(util.lookupEntries('src/app/page', true), process.env.ENTRY_FILTER).forEach(function (item) {
     entries[item.entryname] = path.resolve(item.pathname, 'index.js');
   });
 
   return entries;
 }
 
-const htmlWebpackPlugins = util.filterEntries(util.lookupEntries('src/view'), process.env.filter).map(function (item) {
+const htmlWebpackPlugins = util.filterEntries(util.lookupEntries('src/template'), process.env.ENTRY_FILTER).map(function (item) {
   let config = {
     favicon: 'src/asset/img/favicon.ico',
     template: item.pathname,
@@ -77,8 +77,8 @@ module.exports = {
       }
     },
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        test: /\.less$/,
+        use: ['style-loader', 'css-loader', 'less-loader']
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -110,7 +110,7 @@ module.exports = {
   ].concat(htmlWebpackPlugins),
   resolve: {
     alias: {
-      app: path.resolve(__dirname, 'src')
+      app: path.resolve(__dirname, 'src/app')
     }
   }
 };

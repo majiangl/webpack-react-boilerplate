@@ -8,10 +8,6 @@ import {BrowserRouter} from 'react-router-dom';
 
 class SinglePageRoot extends Component {
 
-  shouldComponentUpdate() {
-    return false;
-  }
-
   render() {
     const {reducers, initialState, children} = this.props;
     const rootReducer = reducers ? combineReducers(reducers) : state => state;

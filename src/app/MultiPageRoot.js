@@ -7,10 +7,6 @@ import promiseMiddleware from 'redux-promise-middleware';
 
 class MultiPageRoot extends Component {
 
-  shouldComponentUpdate() {
-    return false;
-  }
-
   render() {
     const {reducers, initialState, children} = this.props;
     const rootReducer = reducers ? combineReducers(reducers) : state => state;

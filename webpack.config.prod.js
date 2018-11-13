@@ -16,14 +16,14 @@ const util = require('./build/util');
 function getEntries() {
   const entries = {};
 
-  util.lookupEntries('src/page', true).forEach(function (item) {
+  util.lookupEntries('src/app/page', true).forEach(function (item) {
     entries[item.entryname] = path.resolve(item.pathname, 'index.js');
   });
 
   return entries;
 }
 
-const htmlWebpackPlugins = util.lookupEntries('src/view').map(function (item) {
+const htmlWebpackPlugins = util.lookupEntries('src/template').map(function (item) {
   let config = {
     favicon: 'src/asset/img/favicon.ico',
     template: item.pathname,
@@ -89,10 +89,11 @@ module.exports = {
       }
     },
       {
-        test: /\.css$/,
+        test: /\.less$/,
         use: [
           MiniCssExtractPlugin.loader,
-          'css-loader'
+          'css-loader',
+          'less-loader'
         ]
       },
       {
@@ -130,7 +131,7 @@ module.exports = {
   ]),
   resolve: {
     alias: {
-      app: path.resolve(__dirname, 'src')
+      app: path.resolve(__dirname, 'src/app')
     }
   },
   stats: {
