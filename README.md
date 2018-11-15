@@ -8,7 +8,7 @@
 ## Framework Features
 - [x] SPA and MPA support
 - [x] React/Redux/React-Redux/React-Router
-- [ ] Less/CSS Modules/Autoprefixer
+- [x] Less/CSS Modules
 - [ ] I18n
 
 ## TODO...

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import style from './DemoComponent.less';
 /**
  * React Component
  *
@@ -17,17 +18,17 @@ class DemoComponent extends Component {
   }
 
   render() {
-    const {text} = this.props;
+    const {children} = this.props;
     return (
-      <div>
-        {text}
+      <div className="DemoComponent">
+        {children}
       </div>
     );
   }
 }
 
-DemoComponent.propTypes = {
-  text: PropTypes.string.isRequired
-}
-
 export default DemoComponent;
+
+DemoComponent.propTypes = {
+  children: PropTypes.node
+}

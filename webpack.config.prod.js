@@ -53,7 +53,7 @@ module.exports = {
       new UglifyJsPlugin({
         cache: true,
         parallel: true,
-        sourceMap: true // set to true if you want JS source maps
+        sourceMap: false // set to true if you want JS source maps
       }),
       new OptimizeCSSAssetsPlugin({})
     ],
@@ -92,8 +92,17 @@ module.exports = {
         test: /\.less$/,
         use: [
           MiniCssExtractPlugin.loader,
-          'css-loader',
-          'less-loader'
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              modules: true,
+              localIdentName: '[name]__[local]'
+            }
+          },
+          {
+            loader: 'less-loader'
+          }
         ]
       },
       {
@@ -131,7 +140,8 @@ module.exports = {
   ]),
   resolve: {
     alias: {
-      app: path.resolve(__dirname, 'src/app')
+      app: path.resolve(__dirname, 'src/app'),
+      style: path.resolve(__dirname, 'src/style')
     }
   },
   stats: {

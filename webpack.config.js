@@ -36,7 +36,7 @@ module.exports = {
   },
   // 不同的source map策略选择：https://webpack.js.org/configuration/devtool/
   // 不同的source map效果： https://github.com/webpack/webpack/tree/master/examples/source-map
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'eval-source-map',
   // See served files: http://localhost:8080/webpack-dev-server
   devServer: {
     contentBase: './dist',
@@ -78,7 +78,23 @@ module.exports = {
     },
       {
         test: /\.less$/,
-        use: ['style-loader', 'css-loader', 'less-loader']
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              sourceMap: true,
+              modules: true,
+              localIdentName: '[name]__[local]'
+            }
+          },
+          {
+            loader: 'less-loader',
+            options: {
+              sourceMap: true
+            }
+          }]
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -103,14 +119,13 @@ module.exports = {
     ]
   },
   plugins: [
-    // 清空 dist 目录
-    new CleanWebpackPlugin(['dist']),
     // This plugin will cause the relative path of the module to be displayed when HMR is enabled.
     new webpack.HotModuleReplacementPlugin(),
   ].concat(htmlWebpackPlugins),
   resolve: {
     alias: {
-      app: path.resolve(__dirname, 'src/app')
+      app: path.resolve(__dirname, 'src/app'),
+      style: path.resolve(__dirname, 'src/style')
     }
   }
 };
