@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import style from './DemoComponent.less';
+import './DemoComponent.less';
+
 /**
  * React Component
  *
@@ -9,26 +10,26 @@ import style from './DemoComponent.less';
  */
 class DemoComponent extends Component {
 
-  /**
-   * Create a react component
-   * @param {object} props - properties passed to react component
-   */
-  constructor(props) {
-    super(props);
-  }
+    /**
+     * Create a react component
+     * @param {object} props - properties passed to react component
+     */
+    constructor(props) {
+        super(props);
+    }
 
-  render() {
-    const {children} = this.props;
-    return (
-      <div className="DemoComponent">
-        {children}
-      </div>
-    );
-  }
+    render() {
+        const {children} = this.props;
+        return (
+            <div className="DemoComponent">
+                {children}
+            </div>
+        );
+    }
 }
 
 export default DemoComponent;
 
 DemoComponent.propTypes = {
-  children: PropTypes.node
+    children: PropTypes.node
 }

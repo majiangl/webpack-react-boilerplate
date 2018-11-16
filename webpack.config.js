@@ -10,122 +10,122 @@ const util = require('./build/util');
  * @return {'demo':['src/page/demo.js']}
  */
 function getEntries() {
-  const entries = {};
+    const entries = {};
 
-  util.filterEntries(util.lookupEntries('src/app/page', true), process.env.ENTRY_FILTER).forEach(function (item) {
-    entries[item.entryname] = path.resolve(item.pathname, 'index.js');
-  });
+    util.filterEntries(util.lookupEntries('src/app/page', true), process.env.ENTRY_FILTER).forEach(function (item) {
+        entries[item.entryname] = path.resolve(item.pathname, 'index.js');
+    });
 
-  return entries;
+    return entries;
 }
 
 const htmlWebpackPlugins = util.filterEntries(util.lookupEntries('src/template'), process.env.ENTRY_FILTER).map(function (item) {
-  let config = {
-    favicon: 'src/asset/img/favicon.ico',
-    template: item.pathname,
-    chunks: ['runtime', 'vendors', 'core', item.entryname]
-  };
-  return new HtmlWebpackPlugin(config);
+    let config = {
+        favicon: 'src/asset/img/favicon.ico',
+        template: item.pathname,
+        chunks: ['runtime', 'vendors', 'core', item.entryname]
+    };
+    return new HtmlWebpackPlugin(config);
 });
 
 module.exports = {
-  entry: getEntries(),
-  output: {
-    filename: 'js/[name].js',
-    path: path.resolve(__dirname, 'dist')
-  },
-  // 不同的source map策略选择：https://webpack.js.org/configuration/devtool/
-  // 不同的source map效果： https://github.com/webpack/webpack/tree/master/examples/source-map
-  devtool: 'eval-source-map',
-  // See served files: http://localhost:8080/webpack-dev-server
-  devServer: {
-    contentBase: './dist',
-    historyApiFallback: true,
-    hot: true
-  },
-  mode: 'development',
-  optimization: {
-    runtimeChunk: 'single',
-    splitChunks: {
-      chunks: 'all',
-      cacheGroups: {
-        vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          priority: -10
-        },
-        default: {
-          name: 'core',
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true
-        }
-      }
-    }
-  },
-  module: {
-    rules: [{
-      test: /\.js$/,
-      // 排除不需要转码的目录，提高 babel 效率
-      exclude: /(node_modules|bower_components|build)/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          // babel-loader 特有配置，缓存 babel 转化结果，提高效率
-          cacheDirectory: true
-        }
-      }
+    entry: getEntries(),
+    output: {
+        filename: 'js/[name].js',
+        path: path.resolve(__dirname, 'dist')
     },
-      {
-        test: /\.less$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-              sourceMap: true,
-              modules: true,
-              localIdentName: '[name]__[local]'
+    // 不同的source map策略选择：https://webpack.js.org/configuration/devtool/
+    // 不同的source map效果： https://github.com/webpack/webpack/tree/master/examples/source-map
+    devtool: 'eval-source-map',
+    // See served files: http://localhost:8080/webpack-dev-server
+    devServer: {
+        contentBase: './dist',
+        historyApiFallback: true,
+        hot: true
+    },
+    mode: 'development',
+    optimization: {
+        runtimeChunk: 'single',
+        splitChunks: {
+            chunks: 'all',
+            cacheGroups: {
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    priority: -10
+                },
+                default: {
+                    name: 'core',
+                    minChunks: 2,
+                    priority: -20,
+                    reuseExistingChunk: true
+                }
             }
-          },
-          {
-            loader: 'less-loader',
-            options: {
-              sourceMap: true
+        }
+    },
+    module: {
+        rules: [{
+            test: /\.js$/,
+            // 排除不需要转码的目录，提高 babel 效率
+            exclude: /(node_modules|bower_components|build)/,
+            use: {
+                loader: 'babel-loader',
+                options: {
+                    // babel-loader 特有配置，缓存 babel 转化结果，提高效率
+                    cacheDirectory: true
+                }
             }
-          }]
-      },
-      {
-        test: /\.(png|jpg|gif)$/,
-        use: [{
-          loader: 'url-loader',
-          options: {
-            name: '[name].[ext]',
-            outputPath: 'img/'
-          }
-        }]
-      },
-      {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: [{
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-            outputPath: 'font/'
-          }
-        }]
-      }
-    ]
-  },
-  plugins: [
-    // This plugin will cause the relative path of the module to be displayed when HMR is enabled.
-    new webpack.HotModuleReplacementPlugin(),
-  ].concat(htmlWebpackPlugins),
-  resolve: {
-    alias: {
-      app: path.resolve(__dirname, 'src/app'),
-      style: path.resolve(__dirname, 'src/style')
+        },
+            {
+                test: /\.less$/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1,
+                            sourceMap: true,
+                            modules: true,
+                            localIdentName: '[name]__[local]'
+                        }
+                    },
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    }]
+            },
+            {
+                test: /\.(png|jpg|gif)$/,
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        outputPath: 'img/'
+                    }
+                }]
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        outputPath: 'font/'
+                    }
+                }]
+            }
+        ]
+    },
+    plugins: [
+        // This plugin will cause the relative path of the module to be displayed when HMR is enabled.
+        new webpack.HotModuleReplacementPlugin(),
+    ].concat(htmlWebpackPlugins),
+    resolve: {
+        alias: {
+            app: path.resolve(__dirname, 'src/app'),
+            style: path.resolve(__dirname, 'src/style')
+        }
     }
-  }
 };
