@@ -12,7 +12,7 @@ const util = require('./build/util');
 function getEntries() {
     const entries = {};
 
-    util.filterEntries(util.lookupEntries('src/app/page', true), process.env.ENTRY_FILTER).forEach(function (item) {
+    util.filterEntries(util.lookupEntries('src/javascript/page', true), process.env.ENTRY_FILTER).forEach(function (item) {
         entries[item.entryname] = path.resolve(item.pathname, 'index.js');
     });
 
@@ -124,7 +124,7 @@ module.exports = {
     ].concat(htmlWebpackPlugins),
     resolve: {
         alias: {
-            app: path.resolve(__dirname, 'src/app'),
+            js: path.resolve(__dirname, 'src/javascript'),
             style: path.resolve(__dirname, 'src/style')
         }
     }

@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'style/base.less';
-import MultiPageRoot from 'app/MultiPageRoot';
+import MultiPageApp from 'js/MultiPageApp';
 import Demo from './Demo';
 
 ReactDOM.render(
-    <MultiPageRoot>
+    <MultiPageApp>
         <Demo></Demo>
-    </MultiPageRoot>,
+    </MultiPageApp>,
     document.getElementById('root')
 );

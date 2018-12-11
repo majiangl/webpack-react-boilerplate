@@ -4,9 +4,8 @@ import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise-middleware';
-import {BrowserRouter} from 'react-router-dom';
 
-class SinglePageRoot extends Component {
+class MultiPageApp extends Component {
 
     render() {
         const {reducers, initialState, children} = this.props;
@@ -14,9 +13,7 @@ class SinglePageRoot extends Component {
         const store = createStore(rootReducer, initialState, this.getStoreEnhancer());
 
         return (
-            <Provider store={store}>
-                <BrowserRouter>{children}</BrowserRouter>
-            </Provider>
+            <Provider store={store}>{children}</Provider>
         );
     }
 
@@ -30,10 +27,10 @@ class SinglePageRoot extends Component {
     }
 }
 
-SinglePageRoot.propTypes = {
+MultiPageApp.propTypes = {
     children: PropTypes.node,
     initialState: PropTypes.object,
     reducers: PropTypes.object
-}
+};
 
-export default SinglePageRoot;
+export default MultiPageApp;

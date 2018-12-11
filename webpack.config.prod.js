@@ -16,7 +16,7 @@ const util = require('./build/util');
 function getEntries() {
     const entries = {};
 
-    util.lookupEntries('src/app/page', true).forEach(function (item) {
+    util.lookupEntries('src/javascript/page', true).forEach(function (item) {
         entries[item.entryname] = path.resolve(item.pathname, 'index.js');
     });
 
@@ -140,7 +140,7 @@ module.exports = {
     ]),
     resolve: {
         alias: {
-            app: path.resolve(__dirname, 'src/app'),
+            js: path.resolve(__dirname, 'src/javascript'),
             style: path.resolve(__dirname, 'src/style')
         }
     },

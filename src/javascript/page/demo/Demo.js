@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Demo.less';
-import DemoComponent from 'app/component/DemoComponent/DemoComponent';
+import DemoComponent from 'js/component/DemoComponent/DemoComponent';
 
 class Demo extends Component {
     render() {
