@@ -12,6 +12,9 @@ module.exports = {
         "@babel/preset-react"
     ],
     "plugins": [
-        "@babel/plugin-transform-runtime"
+        "@babel/plugin-transform-runtime",
+        ["react-intl",{
+            "messagesDir": "./build/messages/"
+        }]
     ]
 };

@@ -26,6 +26,7 @@ function getEntries() {
 const htmlWebpackPlugins = util.lookupEntries('src/template').map(function (item) {
     let config = {
         favicon: 'src/asset/img/favicon.ico',
+        filename: item.filename,
         template: item.pathname,
         chunks: ['runtime', 'vendors', 'core', item.entryname],
         minify: {

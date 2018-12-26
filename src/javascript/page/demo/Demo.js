@@ -1,11 +1,23 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
+import {IntlProvider, FormattedMessage} from 'react-intl';
+
 import './Demo.less';
-import DemoComponent from 'js/component/DemoComponent/DemoComponent';
 
 class Demo extends Component {
     render() {
         return (
-            <DemoComponent>Hello, World!</DemoComponent>
+            <IntlProvider>
+                <Fragment>
+                    <FormattedMessage
+                        id='demo.select-language'
+                        defaultMessage='Please select a language: '
+                    />
+                    <select>
+                        <option value='en'>English</option>
+                        <option value='zh'>中文</option>
+                    </select>
+                </Fragment>
+            </IntlProvider>
         );
     }
 }
