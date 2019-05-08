@@ -21,7 +21,7 @@ class SinglePageApp extends Component {
     }
 
     getStoreEnhancer() {
-        const middlewares = [thunk, promiseMiddleware()];
+        const middlewares = [thunk, promiseMiddleware];
         if (process.env.NODE_ENV !== 'production') {
             const {default: logger} = require('redux-logger');
             middlewares.push(logger);
